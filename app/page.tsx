@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import Head from 'next/head';
-import { FiSearch, FiShoppingCart, FiChevronRight, FiStar, FiTruck, FiShield, FiRefreshCw, FiX } from 'react-icons/fi';
+import { FiShoppingCart, FiChevronRight, FiStar, FiTruck, FiShield, FiRefreshCw, FiX } from 'react-icons/fi';
 import Link from 'next/link';
 
 interface Product {
@@ -38,10 +38,7 @@ export default function Home() {
         // Fetch trending products (electronics category)
         const trendingResponse = await axios.get('https://fakestoreapi.com/products/category/electronics');
         setTrendingProducts(trendingResponse.data.slice(0, 6));
-  const addToCart = (product: Product) => {
-        setLoading(false);
-  }
-      } catch (err :any) {
+      } catch (err : unknown) {
         console.error("Error fetching products:", err);
         setLoading(false);
       }
@@ -202,7 +199,9 @@ export default function Home() {
             {trendingProducts.map(product => (
               <div key={product.id} className="bg-gray-100 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
                 <div className="relative h-48 bg-white flex items-center justify-center p-4">
-                  <img 
+                  <Image
+                    width={139}
+                    height={190}
                     src={product.image} 
                     alt={product.title} 
                     className="max-h-full max-w-full object-contain"
@@ -275,7 +274,9 @@ export default function Home() {
                       {cart.map(item => (
                         <div key={item.id} className="flex items-center border-b border-gray-200 pb-4">
                           <div className="flex-shrink-0 h-16 w-16 bg-gray-200 rounded-md overflow-hidden">
-                            <img
+                            <Image
+                              width={139}
+                              height={190}
                               src={item.image}
                               alt={item.title}
                               className="h-full w-full object-contain"

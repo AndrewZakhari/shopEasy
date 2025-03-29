@@ -18,7 +18,7 @@ export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<unknown | null>(null);
   const [cart, setCart] = useState<(Product & { quantity: number })[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -43,8 +43,8 @@ export default function Home() {
         setProducts(response.data);
         setFilteredProducts(response.data);
         setLoading(false);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        setError(err);
         setLoading(false);
       }
     };
@@ -113,7 +113,7 @@ export default function Home() {
       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
     </div>
     );
-  if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {error}</div>;
+  if (error) return <div className="flex justify-center items-center h-screen text-red-500">Error: {String(error)}</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">
